@@ -1,2 +1,3 @@
-# whatsapp-gateway
-Kirim Notifikasi via Whatsapp dengan Gateway Favoritmu
+## 🪝 LokusWP - Whatsapp Gateway
+
+Addon Notifikasi Whatsapp untuk Kirim Notifikasi dengan berbagai Pilihan Whatsapp Gateway 
