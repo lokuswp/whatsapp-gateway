@@ -1,28 +1,30 @@
-## Changelog
+# Changelog
 
-[0.1.0]
-### Admin and Configuration
-- [X] Notification Channel
-- [X] Log
-- [X] Configuration Interface
-- [X] Multiple Notification for Admin
-- [ ] Testing
+# [v0.1.0]() (2022-08-01)
 
-### App Plugin : LWCommerce
-- [X] Pending + Admin
-- [X] Processing
-- [X] Shipping
-- [X] Completed + Admin
-- [X] Cancelled
+**Added :**
+- Checkout via Whatsapp
+- Shipping : Takeaway | JNE
 
-### App Plugin : LWDonation
-- [X] Pending + Admin
-- [X] Completed + Admin
-- [ ] Cancelled
 
-### Whatsapp Gateway
-- [ ] DripSender
-- [ ] Fonnte
-- [ ] OneSender
-- [ ] StarSender
-- [ ] Wablas
+# [v0.1.1]() (2022-08-22)
+
+**Enhance :**
+- Onboarding
+- Cart Panel
+- Checkout : Phsyical Product
+- Product Listing with Category Filter
+- Product Listing Mobile First
+
+**Newest :**
+- Notifikasi for Admin
+- Resi Input
+- Stock : Checking
+- Translation to Indonesia
+
+# [v0.1.2]() (2022-08-28)
+**Fixing :**
+- Shipping Option
+
+**Newest :**
+- Product Archive
