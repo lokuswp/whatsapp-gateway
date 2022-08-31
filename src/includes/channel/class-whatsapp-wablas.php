@@ -292,7 +292,7 @@ class Notification_Whatsapp_Wablas extends Notification\Gateway {
      */
     public function config() {
         if ( file_exists( dirname( __FILE__ ) . '/admin-config/settings-wablas.php' ) ) {
-            require_once dirname( __FILE__ ) . '/admin-config/settings-wablas.php';
+            require dirname( __FILE__ ) . '/admin-config/settings-wablas.php';
         }
     }
 
@@ -306,7 +306,7 @@ class Notification_Whatsapp_Wablas extends Notification\Gateway {
      */
     public function manage_template_notification( string $app ) {
         if ( file_exists( dirname( __FILE__ ) . '/templates/manage-template-' . $app . '.php' ) ) {
-            require_once dirname( __FILE__ ) . '/templates/manage-template-' . $app . '.php';
+            require dirname( __FILE__ ) . '/templates/manage-template-' . $app . '.php';
         }
     }
 

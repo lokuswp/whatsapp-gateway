@@ -301,7 +301,7 @@ class Notification_Whatsapp_DripSender extends Notification\Gateway {
      */
     public function manage_template_notification( string $app ) {
         if ( file_exists( dirname( __FILE__ ) . '/templates/manage-template-' . $app . '.php' ) ) {
-            require_once dirname( __FILE__ ) . '/templates/manage-template-' . $app . '.php';
+            require dirname( __FILE__ ) . '/templates/manage-template-' . $app . '.php';
         }
     }
 

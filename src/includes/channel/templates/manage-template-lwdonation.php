@@ -1,6 +1,6 @@
 <?php
 $settings = json_decode( lwp_get_option( $this->id . '-lwdonation' ), true );
-include LOKUSWP_WA_GATEWAY_PATH . 'src/includes/channel/notification-whatsapp/default-template-lwdonation.php';
+include LOKUSWP_WA_GATEWAY_PATH . 'src/includes/channel/templates/default-template-lwdonation.php';
 
 $pending_template_for_user   = isset( $settings['pending']['user']['template']['id_ID'] ) ? esc_attr( $settings['pending']['user']['template']['id_ID'] ) : $template_pending_for_user;
 $completed_template_for_user = isset( $settings['completed']['user']['template']['id_ID'] ) ? esc_attr( $settings['completed']['user']['template']['id_ID'] ) : $template_completed_for_user;

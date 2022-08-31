@@ -289,7 +289,7 @@ class Notification_Whatsapp_WooWaa extends Notification\Gateway {
      */
     public function config() {
         if ( file_exists( dirname( __FILE__ ) . '/admin-config/settings-woowaa.php' ) ) {
-            require_once dirname( __FILE__ ) . '/admin-config/settings-woowaa.php';
+            require dirname( __FILE__ ) . '/admin-config/settings-woowaa.php';
         }
     }
 
