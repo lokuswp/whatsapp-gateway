@@ -15,11 +15,11 @@ $completed_template_for_admin = isset( $settings['completed']['admin']['template
 
 <style>
     /* Action Tab */
-    #wa_gateway-tab1:checked ~ .tab-body-wrapper #wa_gateway-tab-body-1,
-    #wa_gateway-tab2:checked ~ .tab-body-wrapper #wa_gateway-tab-body-2,
-    #wa_gateway-tab3:checked ~ .tab-body-wrapper #wa_gateway-tab-body-3,
-    #wa_gateway-tab4:checked ~ .tab-body-wrapper #wa_gateway-tab-body-4,
-    #wa_gateway-tab5:checked ~ .tab-body-wrapper #wa_gateway-tab-body-5 {
+    #<?= $this->id; ?>-tab1:checked ~ .tab-body-wrapper #<?= $this->id; ?>-tab-body-1,
+    #<?= $this->id; ?>-tab2:checked ~ .tab-body-wrapper #<?= $this->id; ?>-tab-body-2,
+    #<?= $this->id; ?>-tab3:checked ~ .tab-body-wrapper #<?= $this->id; ?>-tab-body-3,
+    #<?= $this->id; ?>-tab4:checked ~ .tab-body-wrapper #<?= $this->id; ?>-tab-body-4,
+    #<?= $this->id; ?>-tab5:checked ~ .tab-body-wrapper #<?= $this->id; ?>-tab-body-5 {
         position: relative;
         top: 0;
         opacity: 1;
@@ -55,23 +55,23 @@ $completed_template_for_admin = isset( $settings['completed']['admin']['template
 <h4>Pengaturan Template </h4>
 <div class="tabs-wrapper">
 
-    <input type="radio" name="wa_gateway" id="wa_gateway-tab1" checked="checked"/>
-    <label class="tab" for="wa_gateway-tab1"><?php _e( 'Pending', 'lokuswp' ); ?></label>
+    <input type="radio" name="<?= $this->id; ?>" id="<?= $this->id; ?>-tab1" checked="checked"/>
+    <label class="tab" for="<?= $this->id; ?>-tab1"><?php _e( 'Pending', 'lokuswp' ); ?></label>
 
-    <input type="radio" name="wa_gateway" id="wa_gateway-tab2"/>
-    <label class="tab" for="wa_gateway-tab2"><?php _e( 'Completed', 'lokuswp' ); ?></label>
+    <input type="radio" name="<?= $this->id; ?>" id="<?= $this->id; ?>-tab2"/>
+    <label class="tab" for="<?= $this->id; ?>-tab2"><?php _e( 'Completed', 'lokuswp' ); ?></label>
 
-    <input type="radio" name="wa_gateway" id="wa_gateway-tab3"/>
-    <label class="tab" for="wa_gateway-tab3"><?php _e( 'Cancelled', 'lokuswp' ); ?></label>
+    <input type="radio" name="<?= $this->id; ?>" id="<?= $this->id; ?>-tab3"/>
+    <label class="tab" for="<?= $this->id; ?>-tab3"><?php _e( 'Cancelled', 'lokuswp' ); ?></label>
 
 
     <div class="tab-body-wrapper">
 
         <!------------ Tab : Pending ------------>
-        <div id="wa_gateway-tab-body-1" class="tab-body">
+        <div id="<?= $this->id; ?>-tab-body-1" class="tab-body">
 
             <form>
-                <h6><?php _e( "Untuk Pembeli", "lokuswp-wa_gateway" ); ?></h6>
+                <h6><?php _e( "Untuk Pembeli", "lokuswp" ); ?></h6>
                 <textarea class="form-input"
                           name="pending[user][template][id_ID]"
                           placeholder="<?= $pending_template_for_user; ?>"
@@ -79,7 +79,7 @@ $completed_template_for_admin = isset( $settings['completed']['admin']['template
                 </textarea>
 
                 <br>
-                <h6><?php _e( "Untuk Admin", "lokuswp-wa_gateway" ); ?></h6>
+                <h6><?php _e( "Untuk Admin", "lokuswp" ); ?></h6>
                  <input type="text" class="form-input" name="pending[admin][receivers]" placeholder="628238642022, 6285618257521" value="<?= $receivers_for_admin_when_pending; ?>">
 
                 <textarea class="form-input"
@@ -97,17 +97,17 @@ $completed_template_for_admin = isset( $settings['completed']['admin']['template
         </div>
 
         <!------------ Tab : Completed ------------>
-        <div id="wa_gateway-tab-body-2" class="tab-body">
+        <div id="<?= $this->id; ?>-tab-body-2" class="tab-body">
 
             <form>
-                <h6><?php _e( "Untuk Pembeli", "lokuswp-wa_gateway" ); ?></h6>
+                <h6><?php _e( "Untuk Pembeli", "lokuswp" ); ?></h6>
                 <textarea class="form-input"
                           name="completed[user][template][id_ID]"
                           placeholder="<?= $completed_template_for_user; ?>"
                           rows="9"><?= $completed_template_for_user; ?></textarea>
 
                 <br>
-                <h6><?php _e( "Untuk Admin", "lokuswp-wa_gateway" ); ?></h6>
+                <h6><?php _e( "Untuk Admin", "lokuswp" ); ?></h6>
                 <input type="text" class="form-input" name="completed[admin][receivers]" placeholder="628238642022, 6285618257521" value="<?= $receivers_for_admin_when_completed; ?>">
 
                 <textarea class="form-input"
@@ -126,10 +126,10 @@ $completed_template_for_admin = isset( $settings['completed']['admin']['template
 
 
         <!------------ Tab : Cancelled ------------>
-        <div id="wa_gateway-tab-body-3" class="tab-body">
+        <div id="<?= $this->id; ?>-tab-body-3" class="tab-body">
 
             <form>
-                <h6><?php _e( "Untuk Pembeli", "lokuswp-wa_gateway" ); ?></h6>
+                <h6><?php _e( "Untuk Pembeli", "lokuswp" ); ?></h6>
                 <textarea class="form-input"
                           name="cancelled[user][template][id_ID]"
                           placeholder="<?= $cancelled_template_for_user; ?>"
