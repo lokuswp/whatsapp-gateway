@@ -56,9 +56,9 @@ class Notification_Whatsapp_OneSender extends Notification\Gateway {
 			$settings['completed']['user']['template']['id_ID']  = $template_completed_for_user;
 			$settings['cancelled']['user']['template']['id_ID']  = $template_cancelled_for_user;
 
-            $settings['completed']['admin']['template']['id_ID']  = $template_completed_for_admin;
+			$settings['completed']['admin']['template']['id_ID'] = $template_completed_for_admin;
 
-            lwp_update_option( $this->id . '-lwcommerce', json_encode( $settings ) );
+			lwp_update_option( $this->id . '-lwcommerce', json_encode( $settings ) );
 		}
 
 		if ( empty( lwp_get_option( $this->id . '-lwdonation' ) ) ) {
@@ -81,6 +81,7 @@ class Notification_Whatsapp_OneSender extends Notification\Gateway {
 	 */
 	public function reset() {
 		lwp_update_option( $this->id . '-config', null );
+		lwp_update_option( $this->id . '-lwcommerce', null );
 		lwp_update_option( $this->id . '-lwdonation', null );
 		$this->setup();
 	}
@@ -106,13 +107,16 @@ class Notification_Whatsapp_OneSender extends Notification\Gateway {
 		$data['email'] = lwp_get_transaction_meta( $trx_id, '_user_field_email', true );
 		$data['total'] = lwp_currency_format( true, $notification_obj->total, $notification_obj->currency );
 
+
 		// Get Status based on App
 		if ( $notification_obj->app == "lwdonation" ) {
-			$data['status']    = lwd_get_report_meta( $trx_id, '_report_status', true );
+//			$data['status']    = lwd_get_report_meta( $trx_id, '_report_status', true );
 			$data['report_id'] = lwd_get_report_meta( $trx_id, '_report_id', true );
 		} else if ( $notification_obj->app == "lwcommerce" ) {
-			$data['status']   = lwc_get_order_meta( $trx_id, '_order_status', true );
-			$data['order_id'] = lwc_get_order_meta( $trx_id, '_order_id', true );
+//			$data['status']   = lwc_get_order_meta( $trx_id, '_order_status', true );
+			$data['order_id']   = lwc_get_order_meta( $trx_id, '_order_id', true );
+			$store_name         = lwp_get_settings( 'lwcommerce', 'store', 'name' );
+			$data['store_name'] = empty( $store_name ) ? "AMBILDITOKO" : $store_name;
 		}
 
 		$data['status_text'] = lwp_get_transaction_status_text( $notification_obj->status );
@@ -135,10 +139,12 @@ class Notification_Whatsapp_OneSender extends Notification\Gateway {
 	 */
 	public function prepare_template( $app, $status, $role, $locale ) {
 
-        include LOKUSWP_WA_GATEWAY_PATH . 'src/includes/channel/templates/default-template-lwcommerce.php';
+		include LOKUSWP_WA_GATEWAY_PATH . 'src/includes/channel/templates/default-template-lwcommerce.php';
 		$template = json_decode( lwp_get_option( $this->id . '-' . $app ), true );
 
-		return isset( $template[ $status ][ $role ]['template'][ $locale ] ) ? esc_attr( $template[ $status ][ $role ]['template'][ $locale ] ) : ${"template_" . $status . "_for_" . $role };
+		if ( isset( ${"template_" . $status . "_for_" . $role} ) ) {
+			return isset( $template[ $status ][ $role ]['template'][ $locale ] ) ? esc_attr( $template[ $status ][ $role ]['template'][ $locale ] ) : ${"template_" . $status . "_for_" . $role};
+		}
 	}
 
 	/**
@@ -156,7 +162,7 @@ class Notification_Whatsapp_OneSender extends Notification\Gateway {
 
 		// Getting Email Data, based on App
 		$data   = $this->prepare_data( $notification_obj );
-		$status = $data['status'];
+		$status = isset( $data['status'] ) ? $data['status'] : $notification_obj->status;
 
 		// Getting Notification Template
 		$template = $this->prepare_template( $notification_obj->app, $status, $role, $locale );
@@ -168,6 +174,9 @@ class Notification_Whatsapp_OneSender extends Notification\Gateway {
 
 		$template = str_replace( "{{payment}}", lwp_get_notification_block_payment_text( $locale, $notification_obj ), $template );
 		$template = str_replace( "{{summary}}", lwp_get_notification_block_summary_text( $locale, $notification_obj ), $template );
+		$template = str_replace( "{{pickup_list}}", lwp_get_notification_block_pickup_list_text( $locale, $notification_obj ), $template );
+		$template = str_replace( "{{pickup}}", lwp_get_notification_block_pickup_time_text( $locale, $notification_obj ), $template );
+
 
 		$template = apply_filters( 'lokuswp/notification/whatsapp/onesender/templating', $template, $data );
 		// $template = str_replace( "{{billing}}", lwp_get_notification_block_billing_text( $locale, $notification_obj->transaction_id ), $template );
@@ -190,6 +199,7 @@ class Notification_Whatsapp_OneSender extends Notification\Gateway {
 	public function execute( array $notification_obj ) {
 		$notification_obj = (object) $notification_obj;
 
+
 		if ( $this->status() && isset( $notification_obj->payment_id ) ) {
 
 			// Get Personal Data
@@ -207,21 +217,21 @@ class Notification_Whatsapp_OneSender extends Notification\Gateway {
 			}
 
 			// Logic : Notification for Admin
-            $settings = json_decode( lwp_get_option( $this->id . '-' . $notification_obj->app ), true );
-            $admin_receivers = isset( $settings[$notification_obj->status]['admin']['receivers'] ) ? esc_attr( $settings[$notification_obj->status]['admin']['receivers'] ) : "";
-            $admin_template = $this->templating( "admin", $notification_obj );
+			$settings        = json_decode( lwp_get_option( $this->id . '-' . $notification_obj->app ), true );
+			$admin_receivers = isset( $settings[ $notification_obj->status ]['admin']['receivers'] ) ? esc_attr( $settings[ $notification_obj->status ]['admin']['receivers'] ) : "";
+			$admin_template  = $this->templating( "admin", $notification_obj );
 
-            if( $admin_receivers ){
-                $admin_receivers = explode(",",$admin_receivers);
-                foreach ( $admin_receivers as $admin_phone ){
-                    if ( ! empty( $admin_template ) && ! empty( $admin_phone ) ) {
-                        $this->send( array(
-                            'recipient' => lwp_sanitize_phone($admin_phone),
-                            'template'  => $admin_template,
-                        ) );
-                    }
-                }
-            }
+			if ( $admin_receivers ) {
+				$admin_receivers = explode( ",", $admin_receivers );
+				foreach ( $admin_receivers as $admin_phone ) {
+					if ( ! empty( $admin_template ) && ! empty( $admin_phone ) ) {
+						$this->send( array(
+							'recipient' => lwp_sanitize_phone( $admin_phone ),
+							'template'  => $admin_template,
+						) );
+					}
+				}
+			}
 
 		}
 	}
@@ -241,14 +251,15 @@ class Notification_Whatsapp_OneSender extends Notification\Gateway {
 	 */
 	public function send( array $notification ): bool {
 
+//		ray()->text($notification['template']);
 		$settings = lwp_get_option( $this->id . "-config" );
-		$apikey   = isset( $settings['apikey'] ) ? esc_attr($settings['apikey']) : null;
-		$apiurl   = isset( $settings['apiurl'] ) ? esc_url($settings['apiurl']) : null;
+		$apikey   = isset( $settings['apikey'] ) ? esc_attr( $settings['apikey'] ) : null;
+		$apiurl   = isset( $settings['apiurl'] ) ? esc_url( $settings['apiurl'] ) : null;
 
 		// Send Logic
 		try {
 
-            $request  = wp_remote_post( $apiurl, array(
+			$request = wp_remote_post( $apiurl, array(
 				'headers' => array(
 					'Content-Type'  => 'application/json',
 					'Authorization' => 'Bearer ' . $apikey
@@ -263,9 +274,9 @@ class Notification_Whatsapp_OneSender extends Notification\Gateway {
 				] )
 			) );
 
-            if( is_wp_error($request) ){
-                throw new \Exception("Request to Server Failed.");
-            }
+			if ( is_wp_error( $request ) ) {
+				throw new \Exception( "Request to Server Failed." );
+			}
 
 			$response = json_decode( wp_remote_retrieve_body( $request ), true );
 

@@ -1,5 +1,9 @@
 <?php
-$template_pending_for_user = '📦 Pesanan : *{{status_text}}*
+/**
+ * Default Template for Every Status
+ */
+
+$template_pending_for_user = '⌛ Pesanan : *{{status_text}}*
 
 Hi *{{name}}*
 Terimakasih telah melakukan pemesanan
@@ -20,41 +24,77 @@ Salam Hangat
 
 _Tolong abaikan pesan ini jika anda tidak pernah melakukan pemesanan_ 😊';
 
-$template_processing_for_user = "📦 Pesanan : *{{status_text}}*
+$template_paid_for_user = '💳 Pesanan : *{{status_text}}*
 
-Sedang diproses
-Harap menunggu, kami akan segera menghubungi anda.
-Jika pesanan sudah dikirim atau dibatalkan.
+Hi, *{{name}}*
+Pembayaran sudah kami terima,
+Pesanan anda segera akan kami proses 
+
+Salam Hangat
+*LWCommerce*';
+
+$template_processing_for_user = "🔄 Pesanan : *{{status_text}}*
+
+Hi *{{name}}*
+Pesanan kamu tersedia, dan sedang
+kami siapkan. mohon tunggu ya
+{{pickup}}
 
 Salam Hangat
 *LWCommerce*";
 
-$template_shipped_for_user = "📦 Pesanan : *{{status_text}}*
+$template_pickup_for_user = "👋 Pesanan : *{{status_text}}*
 
-Pesanan Sudah Kami Kirim
-Silahkan Lacak Status Pengiriman Disini
-{{shipping}}
+Hi {{name}}
+Pesanan anda sudah selesai, dan
+sudah siap diambil di kasir
+
+Daftar Pesanan *#{{order_id}}*
+{{pickup_list}}
+
+Balas pesan ini dengan pesan : 
+“{{store_name}}”
+lalu tunjukan pesan ini saat 
+mengambil pesanan dikasir.
+
+Terimakasih
+*LWCommerce*";
+
+$template_shipped_for_user = "🚚 Pesanan : *{{status_text}}*
+
+Hi {{name}}
+Pesanan anda sudah di Kirim
+menggunakan kurir : 
+*{{courier}}*
+
+Lacak Pengiriman :
+{{tracking_link}}
 
 Salam Hangat
 *LWCommerce*";
 
-$template_completed_for_user = '📦 Pesanan : *{{status_text}}*
+$template_completed_for_user = '✅ Pesanan : *{{status_text}}*
 
 Terimakasih *{{name}}*
-telah membeli produk kami
-jika terdapat kendala, silahkan chat kami
+telah membeli berbelanja di toko kami
+
+jika perlu sesuatu, silahkan chat kami
 di nomor whatsapp ini 😊
 
 Salam Hangat
 *LWCommerce*';
 
-$template_cancelled_for_user = "📦 Pesanan : *{{status_text}}*
+$template_cancelled_for_user = "❌ Pesanan : *{{status_text}}*
 
-Mohon maaf, pesanan anda kami batalkan
-kami akan segera menghubungi anda.
+Hi *{{name}}*
+Maaf sekali tapi pesanan anda kami 
+batalkan, karena
+{{reason}}
 
 Salam Hangat
 *LWCommerce*";
+
+// -------------------- Admin ------------------------ //
 
 $template_pending_for_admin = 'Order Baru Min !!!
 {{total}}';
