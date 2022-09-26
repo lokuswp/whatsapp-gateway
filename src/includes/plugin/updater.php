@@ -1,24 +1,26 @@
 <?php
 
-namespace LokusWP\Commerce\Modules\Plugin;
+namespace LokusWP\WA_Gateway\Modules\Plugin;
 
-use LokusWP\Utils\Logger;
 use Parsedown;
 use stdClass;
 
 class Updater {
 
-	protected $plugin_file = LWC_BASE; /* ---CHANGE THIS--- */
+	protected $plugin_file = LOKUSWP_WA_GATEWAY_BASE; /* ---CHANGE THIS--- */
 	protected string $plugin_slug = 'whatsapp-gateway'; /* ---CHANGE THIS--- */
 	protected string $plugin_host = 'https://api.github.com/repos/lokuswp/whatsapp-gateway/releases/latest'; /* ---CHANGE THIS--- */
-	protected string $plugin_version = LWC_VERSION; /* ---CHANGE THIS--- */
+	protected string $plugin_version = LOKUSWP_WA_GATEWAY_VERSION; /* ---CHANGE THIS--- */
 
 	public function __construct() {
 		global $pagenow;
 
 		add_filter( 'network_admin_plugin_action_links', [ $this, 'plugin_row' ], 10, 4 );
 		add_filter( 'plugin_action_links', [ $this, 'plugin_row' ], 10, 4 );
-		add_action( 'in_plugin_update_message-' . $this->plugin_slug . '/' . $this->plugin_slug . '.php', [ $this, 'plugin_update_message' ], 10, 2 );
+		add_action( 'in_plugin_update_message-' . $this->plugin_slug . '/' . $this->plugin_slug . '.php', [
+			$this,
+			'plugin_update_message'
+		], 10, 2 );
 		add_filter( 'plugins_api', array( $this, 'plugin_info' ), 9999, 3 );
 		add_action( 'upgrader_process_complete', array( $this, 'plugin_destroy_update' ), 10, 2 );
 
@@ -61,29 +63,29 @@ class Updater {
 				// parsedown (Markdown to html)
 				require_once LWC_PATH . 'src/includes/libraries/php/Parsedown.php';
 				$parsedown = new Parsedown();
-				$assets    = isset($transient->assets) ? current( $transient->assets ) : null;
+				$assets    = isset( $transient->assets ) ? current( $transient->assets ) : null;
 
-				if( $assets ){
+				if ( $assets ) {
 					$res                 = new stdClass();
-					$res->name           = $transient->name;
+					$res->name           = "LokusWP - Whatsapp Gateway";
 					$res->slug           = $this->plugin_slug;
 					$res->version        = $transient->tag_name;
-					$res->tested         = '6.0';
+					$res->tested         = '6.0.2';
 					$res->requires       = '5.8';
-					$res->author         = "<a href='https://lokuswp.id'>LWCommerce</a>";
+					$res->author         = "<a href='https://lokuswp.id'>LokusWP</a>";
 					$res->author_profile = "https://lokuswp.id";
 					if ( isset( $assets->browser_download_url ) ) {
 						$res->download_url = $assets->browser_download_url;
 						$res->trunk        = $assets->browser_download_url;
 					}
 					$res->sections = array(
-						'description'  => 'Plugin Toko Online WordPress dari LokusWP', // description tab
+						'description'  => 'Addon Whatsapp Gateway', // description tab
 						'installation' => 'Upload File, dan Aktifkan Plugin', // installation tab
 						'changelog'    => $parsedown->text( $transient->body ), // changelog tab
 					);
 					$res->banners  = array(
-						'low'  => 'https://lokuswp.id/wp-content/uploads/2022/04/whatsapp-gateway-banner-772x250-1.jpg',
-						'high' => 'https://lokuswp.id/wp-content/uploads/2022/04/whatsapp-gateway-banner-772x250-1.jpg'
+						'low'  => '',
+						'high' => ''
 					);
 				}
 
@@ -172,7 +174,7 @@ class Updater {
 		// Display Update Notice
 		$remote_version = $remote->tag_name ?? null;
 		$remote_version = str_replace( 'v', '', $remote_version );
-		$assets    = isset($transient->assets) ? current( $transient->assets ) : null;
+		$assets         = isset( $remote->assets ) ? current( $remote->assets ) : null;
 
 		if ( $assets && ! is_wp_error( $remote ) && version_compare( $this->plugin_version, $remote_version, '<' ) ) {
 			$res              = new stdClass();
@@ -213,3 +215,5 @@ class Updater {
 		return $links_array;
 	}
 }
+
+new Updater();

@@ -46,6 +46,8 @@ class Boot {
         require_once dirname( __DIR__ ) . '/src/includes/channel/class-whatsapp-onesender.php';
         require_once dirname( __DIR__ ) . '/src/includes/channel/class-whatsapp-starsender.php';
         require_once dirname( __DIR__ ) . '/src/includes/channel/class-whatsapp-wablas.php';
+
+		require_once dirname( __DIR__ ) . '/src/includes/plugin/updater.php';
 	}
 
 }
