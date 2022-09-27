@@ -5,11 +5,14 @@ namespace LokusWP\Notification\WA_Gateway;
 class Boot {
 
 	public function __construct() {
-		add_action( 'plugins_loaded', [ $this, 'loaded' ] );
-
 		// Activation and Deactivation
 		register_activation_hook( LOKUSWP_WA_GATEWAY_BASE, [ $this, 'activate' ] );
 		register_deactivation_hook( LOKUSWP_WA_GATEWAY_BASE, [ $this, 'deactivate' ] );
+
+		// Only Load in Adminstration
+		if ( is_admin() ) {
+			add_action( 'plugins_loaded', [ $this, 'loaded' ] );
+		}
 	}
 
 	/**
@@ -41,11 +44,12 @@ class Boot {
 	 * @since 1.0.0
 	 */
 	public function loaded() {
+
 		require_once dirname( __DIR__ ) . '/src/includes/channel/class-whatsapp-dripsender.php';
-        require_once dirname( __DIR__ ) . '/src/includes/channel/class-whatsapp-fonnte.php';
-        require_once dirname( __DIR__ ) . '/src/includes/channel/class-whatsapp-onesender.php';
-        require_once dirname( __DIR__ ) . '/src/includes/channel/class-whatsapp-starsender.php';
-        require_once dirname( __DIR__ ) . '/src/includes/channel/class-whatsapp-wablas.php';
+		require_once dirname( __DIR__ ) . '/src/includes/channel/class-whatsapp-fonnte.php';
+		require_once dirname( __DIR__ ) . '/src/includes/channel/class-whatsapp-onesender.php';
+		require_once dirname( __DIR__ ) . '/src/includes/channel/class-whatsapp-starsender.php';
+		require_once dirname( __DIR__ ) . '/src/includes/channel/class-whatsapp-wablas.php';
 
 		require_once dirname( __DIR__ ) . '/src/includes/plugin/updater.php';
 	}

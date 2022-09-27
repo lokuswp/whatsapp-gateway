@@ -215,5 +215,4 @@ class Updater {
 		return $links_array;
 	}
 }
-
 new Updater();

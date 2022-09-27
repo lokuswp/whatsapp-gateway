@@ -7,7 +7,7 @@
  * Plugin Name:       ⚏ LokusWP - Whatsapp Gateway
  * Plugin URI:        lokuswp.id/plugins/lokuswp/whatsapp-gateway
  * Description:       [Addon] Integrasi Notifikasi Whatsapp
- * Version:           0.2.0
+ * Version:           0.2.1
  * Author:            LokusWP
  * Author URI:        https://lokuswp.id/
  * License:           GPL-3.0+
@@ -26,8 +26,8 @@ if ( ! defined( 'WPTEST' ) ) {
  * Rename this for your plugin and update it as you release new versions.
  * Define Constant
  */
-defined( 'LOKUSWP_WA_GATEWAY_VERSION' ) or define( 'LOKUSWP_WA_GATEWAY_VERSION', '0.2.0' );
-defined( 'LOKUSWP_WA_GATEWAY_REQUIRED_VERSION' ) or define( 'LOKUSWP_WA_GATEWAY_REQUIRED_VERSION', '0.1.7' );
+defined( 'LOKUSWP_WA_GATEWAY_VERSION' ) or define( 'LOKUSWP_WA_GATEWAY_VERSION', '0.2.1' );
+defined( 'LOKUSWP_WA_GATEWAY_REQUIRED_VERSION' ) or define( 'LOKUSWP_WA_GATEWAY_REQUIRED_VERSION', '0.1.8' );
 defined( 'LOKUSWP_WA_GATEWAY_BASE' ) or define( 'LOKUSWP_WA_GATEWAY_BASE', plugin_basename( __FILE__ ) );
 defined( 'LOKUSWP_WA_GATEWAY_PATH' ) or define( 'LOKUSWP_WA_GATEWAY_PATH', plugin_dir_path( __FILE__ ) );
 defined( 'LOKUSWP_WA_GATEWAY_URI' ) or define( 'LOKUSWP_WA_GATEWAY_URI', plugin_dir_url( __FILE__ ) );
@@ -37,7 +37,7 @@ defined( 'LOKUSWP_WA_GATEWAY_URI' ) or define( 'LOKUSWP_WA_GATEWAY_URI', plugin_
  * Minimum Requirement System
  * PHP : 7.4
  * WordPress : 5.9
- * LokusWP : 0.1.7
+ * LokusWP : 0.1.8
  *
  * @since 0.1.0
  *-----------------------*

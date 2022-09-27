@@ -8,7 +8,7 @@ if ( ! defined( 'WPTEST' ) ) {
 
 class Notification_Whatsapp_StarSender extends Notification\Gateway {
 
-    protected string $id = 'notification-whatsapp-starsender';
+    public string $id = 'notification-whatsapp-starsender';
     protected string $name = 'StarSender';
     protected string $type = 'whatsapp';
 

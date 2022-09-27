@@ -8,7 +8,7 @@ if ( ! defined( 'WPTEST' ) ) {
 
 class Notification_Whatsapp_DripSender extends Notification\Gateway {
 
-    protected string $id = 'notification-whatsapp-dripsender';
+    public string $id = 'notification-whatsapp-dripsender';
     protected string $name = 'DripSender';
     protected string $type = 'whatsapp';
 

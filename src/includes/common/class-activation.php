@@ -2,8 +2,8 @@
 
 namespace LokusWP\Notification\WA_Gateway;
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
+if ( ! defined( 'WPTEST' ) ) {
+	defined( 'ABSPATH' ) or die( "Direct access to files is prohibited" );
 }
 
 class Activation {

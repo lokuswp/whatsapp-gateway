@@ -35,3 +35,7 @@
 
 **Newest :**
 - Plugin Updater
+
+# [v0.2.1]() (2022-09-27)
+**Fixing :**
+- Adjust Class Notification

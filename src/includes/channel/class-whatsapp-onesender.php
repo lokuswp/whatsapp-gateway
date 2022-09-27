@@ -8,7 +8,7 @@ if ( ! defined( 'WPTEST' ) ) {
 
 class Notification_Whatsapp_OneSender extends Notification\Gateway {
 
-	protected string $id = 'notification-whatsapp-onesender';
+	public string $id = 'notification-whatsapp-onesender';
 	protected string $name = 'OneSender';
 	protected string $type = 'whatsapp';
 
@@ -305,7 +305,9 @@ class Notification_Whatsapp_OneSender extends Notification\Gateway {
 	 * @return void
 	 */
 	public function config() {
-		if ( file_exists( dirname( __FILE__ ) . '/admin-config/settings-onesender.php' ) ) {
+		$white_list = [ "lokuswp", "lwcommerce" ];
+		if ( isset( $_GET['page'] ) && in_array( sanitize_key( $_GET['page'] ), $white_list ) && isset( $_GET['tab'] ) && $_GET['tab'] == "notification" &&
+		     file_exists( dirname( __FILE__ ) . '/admin-config/settings-onesender.php' ) ) {
 			require_once dirname( __FILE__ ) . '/admin-config/settings-onesender.php';
 		}
 	}
@@ -319,7 +321,9 @@ class Notification_Whatsapp_OneSender extends Notification\Gateway {
 	 * @return void
 	 */
 	public function manage_template_notification( string $app ) {
-		if ( file_exists( dirname( __FILE__ ) . '/templates/manage-template-' . $app . '.php' ) ) {
+		$white_list = [ "lokuswp", "lwcommerce" ];
+		if ( isset( $_GET['page'] ) && in_array( sanitize_key( $_GET['page'] ), $white_list ) && isset( $_GET['tab'] ) && $_GET['tab'] == "notification" &&
+		     file_exists( dirname( __FILE__ ) . '/templates/manage-template-' . $app . '.php' ) ) {
 			require dirname( __FILE__ ) . '/templates/manage-template-' . $app . '.php';
 		}
 	}
