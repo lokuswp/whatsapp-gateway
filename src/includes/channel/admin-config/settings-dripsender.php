@@ -61,6 +61,16 @@ $apikey = isset( $settings['apikey'] ) ? esc_attr( $settings['apikey'] ) : null;
             <?php //_e( 'Test Notification', "lokuswp" ); ?><!--</button>-->
             <!--			</div>-->
 
+            <div class="divider" data-content="Test: Messaging"></div>
+
+            <div class="input-group" style="width:50%;">
+                <input id="lwp_dripsender_test_phone" style="margin-top:3px;" class="form-input input-md" type="text"
+                       placeholder="081238642022">
+                <button id="lwp_dripsender_test" style="margin-top:3px;"
+                        class="btn btn-primary input-group-btn">
+			        <?php _e('Send Message', 'lokuswp');?> </button>
+            </div>
+
             <div class="divider" data-content="Notification Log"></div>
             <table class="table-log table table-striped table-hover">
                 <tbody>
@@ -115,35 +125,50 @@ $apikey = isset( $settings['apikey'] ) ? esc_attr( $settings['apikey'] ) : null;
 
 <script>
     // Save Template
-    // // On User Sending Test Email
-    // jQuery(document).on("click", "#lokuswp_dripsender_sendtest", function (e) {
-    //     const elTextPhone = jQuery('#lokuswp_dripsender_test');
-    //     const that = this;
-    //
-    //     if (elTextPhone.val() !== '') {
-    //         jQuery(this).addClass('loading');
-    //         elTextPhone.css('border', 'none');
-    //
-    //         jQuery.post(lokuswp_admin.ajax_url, {
-    //             action: 'lokuswp_notification_dripsender_test',
-    //             phone: elTextPhone.val(),
-    //             security: lokuswp_admin.ajax_nonce,
-    //         }, function (response) {
-    //
-    //             if (response.trim() == 200) {
-    //                 jQuery(that).removeClass('loading');
-    //                 jQuery(that).text("Success");
-    //             } else {
-    //                 jQuery(that).removeClass('loading');
-    //                 jQuery(that).text("Failed");
-    //             }
-    //
-    //         }).fail(function () {
-    //             alert('Failed, please check your internet');
-    //         });
-    //
-    //     } else {
-    //         elTextPhone.css('border', '1px solid red');
-    //     }
-    // });
+    // On User Sending Test Message
+    jQuery(document).on("click", "#lwp_dripsender_test", function (e) {
+        const elTextPhone = jQuery('#lwp_dripsender_phone_test');
+        const that = this;
+
+        if (elTextPhone.val() !== '') {
+            jQuery(this).addClass('loading');
+            elTextPhone.css('border', 'none');
+
+            jQuery.post(lokuswp_admin.ajax_url, {
+                action: 'wp_ajax_lokuswp_notification_onesender_test',
+                phone: elTextPhone.val(),
+                security: lokuswp_admin.ajax_nonce,
+            }, function (response) {
+
+                if (response.trim() == 200) {
+                    jQuery(that).removeClass('loading');
+                    jQuery(that).text("Success");
+                } else {
+                    jQuery(that).removeClass('loading');
+                    jQuery(that).text("Failed");
+                }
+
+            }).fail(function () {
+                alert('Failed, please check your internet');
+            });
+
+        } else {
+            elTextPhone.css('border', '1px solid red');
+        }
+    });
 </script>
+
+<?php
+//
+//// Action for Save Option and Test
+//add_action( 'wp_ajax_lokuswp_notification_onesender_test', 'lwp_wagateway_dripsender_test' );
+//function lwp_wagateway_dripsender_test(){
+//	$phone = lwp_sanitize_phone( $_POST['phone'] );
+//
+//	$this->send( array(
+//		'recipient' => $phone,
+//		'template'  => "Test : Sending Message with DripSender by LokusWP",
+//	) );
+//
+//	wp_send_json_success();
+//}

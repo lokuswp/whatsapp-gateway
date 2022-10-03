@@ -9,10 +9,16 @@ class Boot {
 		register_activation_hook( LOKUSWP_WA_GATEWAY_BASE, [ $this, 'activate' ] );
 		register_deactivation_hook( LOKUSWP_WA_GATEWAY_BASE, [ $this, 'deactivate' ] );
 
-		// Only Load in Adminstration
 		if ( is_admin() ) {
-			add_action( 'plugins_loaded', [ $this, 'loaded' ] );
+			require_once dirname( __DIR__ ) . '/src/includes/plugin/updater.php';
 		}
+
+		// Only Load in Adminstration
+		add_action( "lokuswp/wp-admin/settings", [ $this, "loaded" ] );
+		add_action( "lwcommerce/wp-admin/settings", [ $this, "loaded" ] );
+		add_action( "lwdonation/wp-admin/settings", [ $this, "loaded" ] );
+
+		add_action( "lokuswp/notification/action", [ $this, "loaded" ] );
 	}
 
 	/**
@@ -51,7 +57,6 @@ class Boot {
 		require_once dirname( __DIR__ ) . '/src/includes/channel/class-whatsapp-starsender.php';
 		require_once dirname( __DIR__ ) . '/src/includes/channel/class-whatsapp-wablas.php';
 
-		require_once dirname( __DIR__ ) . '/src/includes/plugin/updater.php';
 	}
 
 }

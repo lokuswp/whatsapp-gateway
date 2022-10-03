@@ -25,9 +25,6 @@ class Notification_Whatsapp_OneSender extends Notification\Gateway {
 
 		// Hit : When Notification Scheduler Triggered
 		add_action( 'lokuswp/notification/processing', [ $this, 'execute' ] );
-
-		// Action for Save Option and Test
-		// add_action( 'wp_ajax_lokuswp_notification_onesender_test', [ $this, 'action_test' ] );
 	}
 
 	/******************************************************************************************/
@@ -305,7 +302,7 @@ class Notification_Whatsapp_OneSender extends Notification\Gateway {
 	 * @return void
 	 */
 	public function config() {
-		$white_list = [ "lokuswp", "lwcommerce" ];
+		$white_list = [ "lokuswp", "lwcommerce", "lwdonation" ];
 		if ( isset( $_GET['page'] ) && in_array( sanitize_key( $_GET['page'] ), $white_list ) && isset( $_GET['tab'] ) && $_GET['tab'] == "notification" &&
 		     file_exists( dirname( __FILE__ ) . '/admin-config/settings-onesender.php' ) ) {
 			require_once dirname( __FILE__ ) . '/admin-config/settings-onesender.php';
@@ -321,7 +318,7 @@ class Notification_Whatsapp_OneSender extends Notification\Gateway {
 	 * @return void
 	 */
 	public function manage_template_notification( string $app ) {
-		$white_list = [ "lokuswp", "lwcommerce" ];
+		$white_list = [ "lokuswp", "lwcommerce", "lwdonation" ];
 		if ( isset( $_GET['page'] ) && in_array( sanitize_key( $_GET['page'] ), $white_list ) && isset( $_GET['tab'] ) && $_GET['tab'] == "notification" &&
 		     file_exists( dirname( __FILE__ ) . '/templates/manage-template-' . $app . '.php' ) ) {
 			require dirname( __FILE__ ) . '/templates/manage-template-' . $app . '.php';
@@ -329,10 +326,6 @@ class Notification_Whatsapp_OneSender extends Notification\Gateway {
 	}
 
 	/******************************************************************************************/
-
-	public function action_test() {
-	}
-
 }
 
 Notification\Manager::register( new Notification_Whatsapp_OneSender() );
