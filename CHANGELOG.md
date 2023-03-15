@@ -39,3 +39,8 @@
 # [v0.2.1]() (2022-10-09)
 **Fixing :**
 - Adjust Class Notification
+
+
+# [v0.2.4]() (2023-03-15)
+**Fixing :**
+- Fonnte
