@@ -250,7 +250,7 @@ class Notification_Whatsapp_Fonnte extends Notification\Gateway {
             $curl = curl_init();
 
             curl_setopt_array($curl, array(
-                CURLOPT_URL => "https://md.fonnte.com/api/send_message.php",
+                CURLOPT_URL => "https://api.fonnte.com/send",
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_ENCODING => "",
                 CURLOPT_MAXREDIRS => 10,
@@ -259,9 +259,8 @@ class Notification_Whatsapp_Fonnte extends Notification\Gateway {
                 CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
                 CURLOPT_CUSTOMREQUEST => "POST",
                 CURLOPT_POSTFIELDS => array(
-                    'phone' => $notification['recipient'],
-                    'type' => 'text',
-                    'text' =>  $notification['template'],
+                    'target' => $notification['recipient'],
+                    'message' =>  $notification['template'],
                     'delay' => '1',
                     'schedule' => '0'),
                 CURLOPT_HTTPHEADER => array(
@@ -270,7 +269,6 @@ class Notification_Whatsapp_Fonnte extends Notification\Gateway {
             ));
 
             $response = curl_exec($curl);
-
 
             curl_close($curl);
             sleep(1); #do not delete!
