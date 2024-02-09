@@ -249,15 +249,18 @@ class Notification_Whatsapp_StarSender extends Notification\Gateway {
 
             $message = $notification['template'];
             $phone = $notification['recipient'];
-
-            $request = wp_remote_post('https://starsender.online/api/sendText?message=' . rawurlencode($message) . '&tujuan=' . rawurlencode($phone . '@s.whatsapp.net'), array(
-                'headers' => array(
-                    'Content-Type' => 'application/json',
-                    'apikey' => $apikey
-                )
-            ));
+            
+		    $request = wp_remote_post( 'https://api.starsender.online/api/send', array(
+				'headers' => array( 'Content-Type' => 'application/json', 'Authorization:' . $apikey ),
+				'body'    => json_encode( [
+					'messageType' => "text",
+					'to'   => $notification['recipient'],
+					'body'    => $notification['template']
+				] )
+			) );
 
             if( is_wp_error($request) ){
+				error_log(json_encode($request));
                 throw new \Exception("Request to Server Failed.");
             }
 
