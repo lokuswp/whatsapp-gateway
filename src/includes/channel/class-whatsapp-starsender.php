@@ -246,18 +246,17 @@ class Notification_Whatsapp_StarSender extends Notification\Gateway {
 
         // Send Logic
         try {
-
             $message = $notification['template'];
             $phone = $notification['recipient'];
             
-		    $request = wp_remote_post( 'https://api.starsender.online/api/send', array(
-				'headers' => array( 'Content-Type' => 'application/json', 'Authorization:' . $apikey ),
-				'body'    => json_encode( [
-					'messageType' => "text",
-					'to'   => $notification['recipient'],
-					'body'    => $notification['template']
-				] )
-			) );
+	    $request = wp_remote_post( 'https://api.starsender.online/api/send', array(
+			'headers' => array( 'Content-Type' => 'application/json', 'Authorization' => $apikey ),
+			'body'    => json_encode( [
+				'messageType' => "text",
+				'to'   => $notification['recipient'],
+				'body'    => $notification['template']
+			] )
+		) );
 
             if( is_wp_error($request) ){
 				error_log(json_encode($request));
@@ -267,13 +266,13 @@ class Notification_Whatsapp_StarSender extends Notification\Gateway {
             $response = json_decode( wp_remote_retrieve_body( $request ), true );
 
 
-            if (isset($response) && $response->status == TRUE) {
+            if (isset($response) && $response->success == TRUE) {
 
                 $this->logger( $notification['recipient'], 'SUCCESS', $notification['template'] );
 
                 return true;
             }
-
+			
         } catch ( \Exception $err ) {
             $this->logger( $notification['recipient'], 'FAILED', $err->getMessage() );
         }
